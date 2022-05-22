@@ -1,0 +1,122 @@
+<style>
+  section.featured-blog.mtb-40 {
+    display: none;
+}
+</style>
+
+{% extends 'blog_app/structure.html' %}
+{% load static %}
+{% block banner_img %}{% static 'blog_app/images/banner.jpg' %}{% endblock banner_img %}
+{% block header_title %} Blog Managment
+{% endblock header_title %} {% block main_heading %} Lorem Ipsum is simply dummy
+text {% endblock main_heading %} {% block sub_heading %} Lorem Ipsum is simply
+dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+industry's standard dummy text ever since the 1500s {% endblock sub_heading %}
+
+{% comment %} 
+{% block single_block %} 
+{% include 'blog_app/details.html' with post=post %} 
+{% endblock single_block %} {% endcomment %}
+
+
+ 
+{% comment %} {% block recent_blogs %} 
+{% include 'blog_app/recent_blogs.html' with post=post %} 
+{% endblock recent_blogs %}  {% endcomment %}
+
+{% block blog_detai %}
+<section class="blog-detail mtb-40">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                {% block single_block %} 
+                {% include 'blog_app/details.html' with post=post %} 
+                {% endblock single_block %}
+            </div>
+            <div class="col-md-4">
+                <div class="blog-right">
+                    <div class="right-widget recent-post">
+                        <h3>Recent Blogs</h3>
+                        <a href="#">
+                            {% block recent_blogs %} 
+                            {% include 'blog_app/recent_blogs.html' with post=post %} 
+                            {% endblock recent_blogs %} 
+
+                            {% comment %} {% for post in posts %}
+                            {% endfor %} {% endcomment %}
+                      </a>
+                    </div>
+                     <div class="right-widget categories">
+                         <h3>Categories</h3>
+                         <ul>
+                            <li><a href="#">Technology</a></li>
+                            <li><a href="#">Design</a></li>
+                            <li><a href="#">Culture</a></li>
+                            <li><a href="#">Business</a></li>
+                            <li><a href="#">Politics</a></li>
+                            <li><a href="#">Opinion</a></li>
+                            <li><a href="#">Science</a></li>
+                            <li><a href="#">Health</a></li>
+                            <li><a href="#">Style</a></li>
+                            <li><a href="#">Travel</a></li>
+                        </ul>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock blog_detai %}
+
+
+
+
+{% block comment_block %}
+<section>
+    <div class="container my-5 py-5">
+      <div class="row d-flex">
+        <div class="col-md-8 col-lg-8 col-xl-8">
+          <div class="card">
+              {% for comment in comments %}
+              {% include 'blog_app/single_comment.html' with comment_data=comment %}
+              {% endfor %}
+
+            <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                
+              {% if user.is_authenticated %}
+              <form id="comment_form" method="post" action="{% url 'blog_app:add_comment' post.id %}">
+                  {% csrf_token %}
+                <div class="flex-start w-100">
+                    <div class="marbot  form-outline w-100">
+                        <label class="form-label" for="textAreaExample">Name</label>
+                        <input type="text" class="form-control" name="name" disabled value="{{user.get_username}}">
+                    </div>
+                    <div class="form-outline w-100">
+                    <textarea class="form-control" id="textAreaExample" name="msg" rows="4"
+                        style="background: #fff;"></textarea>
+                    <label class="form-label" for="textAreaExample">Message</label>
+                    </div>
+                </div>
+                <div class="float-end mt-2 pt-1">
+                    <button type="submit" class="btn btn-primary btn-sm">Post comment</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm">Cancel</button>
+                </div>
+            </form>
+              {% else %}
+              <h2>Please <a href="{% url 'blog_app:login_user'%}">Login</a> to Post a Comment</h2>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock comment_block %}
+
+ {% comment %} {% block recent_blogs %}
+
+{% for post in posts %} 
+{% include 'blog_app/recent_blogs.html' with post=post %} 
+{% endfor %}
+
+{% endblock recent_blogs %}  {% endcomment %}

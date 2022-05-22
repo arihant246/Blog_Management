@@ -1,0 +1,25 @@
+{% extends 'blog_app/structure.html' %} 
+{% load static %}
+{% block header_title %}
+Blog Managment
+{% endblock header_title %} 
+{% block main_heading %}
+ Lorem Ipsum is simply dummy text 
+{% endblock main_heading %} 
+{% block sub_heading %} 
+Lorem Ipsum is simply
+dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+industry's standard dummy text ever since the 1500s 
+{% endblock sub_heading %}
+
+{% block banner_img %}{% static 'blog_app/images/banner.jpg' %}{% endblock banner_img %}
+
+{% block main_content %} 
+
+{% for post in posts %} 
+
+{% include 'blog_app/blog_card.html' with post=post %} 
+
+{% endfor %}
+
+{% endblock main_content %}

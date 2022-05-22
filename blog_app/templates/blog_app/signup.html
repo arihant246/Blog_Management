@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+
+    <title>{% block header_title %}{% endblock header_title %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link
+      href="{% static 'blog_app/css/bootstrap.min.css' %}"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'blog_app/css/styles.css' %}" rel="stylesheet" />
+  </head>
+
+  <body>
+<section class="login-wrap mtb-40">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="login-box">
+                    <h1>User Sign Up</h1>
+                    {% if msg %}
+                    <p class="text-danger">{{msg}}</p>
+                    {% endif %}
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" placeholder="Username">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit"  class="btn btn-primary" value="Register">
+                        </div>
+                    </form>
+                    <div class="d-flex justify-content-center links">
+                        Already have an account?  <a href="{% url 'blog_app:login_user' %}"> Login</a>
+                    </div> 
+                </div>        
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="copyright">
+        <div>Designed by ARIHANT</div>
+        </div>
+    </div>
+</footer>    
