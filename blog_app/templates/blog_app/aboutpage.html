@@ -24,48 +24,56 @@
   </head>
 
   <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-blue">
-    <div class="container">
-    <a class="navbar-brand" href="{% url 'blog_app:homepage'%}">
-        <img
-        src="{% static 'blog_app/images/logo.png' %}"
-        alt="Angular Project"
-        />
-    </a>
-    <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarCollapse"
-        aria-controls="navbarCollapse"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-    >
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="{% url 'blog_app:homepage'%}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
-        </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a href="login.html" class="nav-link">Login</a>
-        </li>
-        </ul>
-    </div>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-md navbar-dark bg-blue">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'blog_app:homepage'%}">
+          {% comment %} <img
+            src="{% static 'blog_app/images/logo.png' %}"
+            alt="Angular Project"
+          /> {% endcomment %}
+          <h1 class="custom_logo">Logo</h1>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'blog_app:homepage'%}">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog_app:aboutpage'%}">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog_app:contactpage'%}">Contact</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'blog_app:blogpage'%}">Blog</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav ml-auto">
+           
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a href="{% url 'blog_app:logout_user'%}" class="nav-link">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a href="{% url 'blog_app:login_user'%}" class="nav-link">Login</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
 <section class="cmspage mtb-40">
     <div class="container">
       <h1>About</h1>

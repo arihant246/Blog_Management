@@ -2,7 +2,7 @@ from django.urls import reverse
 from urllib import request
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import CommentModels, PostModel
+from .models import CommentModels,SubCommentModels, PostModel, ContactFormModel
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth import authenticate, login, logout
@@ -28,6 +28,16 @@ def single_post(request, id):
 def add_comment(request, post_id):
     post_obj = PostModel.objects.get(id=post_id)
     comment_obj = CommentModels(post=post_obj, owner=request.user, comment_body=request.POST["msg"])
+    comment_obj.save()
+    return HttpResponseRedirect(reverse("blog_app:single_post", args=(post_id,)))
+
+
+
+@login_required
+@require_http_methods(["POST"])
+def add_comment(request, post_id):
+    post_obj = PostModel.objects.get(id=post_id)
+    comment_obj = SubCommentModels(post=post_obj, owner=request.user, comment_body=request.POST["msg"])
     comment_obj.save()
     return HttpResponseRedirect(reverse("blog_app:single_post", args=(post_id,)))
     
@@ -84,9 +94,17 @@ def aboutpage(request):
     return render(request, 'blog_app/aboutpage.html', {})
    
 def contactpage(request):
+    if request.method=='POST':
+        name = request.POST['name']
+        email = request.POST['email']
+        phone = request.POST['phone']
+        message = request.POST['message']
+        contact = ContactFormModel(name=name, email=email, phone=phone, message=message)
+        contact.save()
     return render(request, 'blog_app/contact.html', {})
     
 def blogpage(request):
-    return render(request, 'blog_app/blog.html', {})
+    posts = PostModel.objects.all().order_by('-id')
+    return render(request, 'blog_app/blog.html', {"posts" : posts})
 
  

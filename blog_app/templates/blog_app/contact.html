@@ -56,7 +56,7 @@
               <a class="nav-link" href="{% url 'blog_app:contactpage'%}">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Blog</a>
+              <a class="nav-link" href="{% url 'blog_app:blogpage'%}">Blog</a>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
@@ -80,21 +80,22 @@
         <div class="row justify-content-center">
           <div class="col-md-8">
             <h1>Contact</h1>
-            <form>
+            <form method="POST"  action="">
+              {% csrf_token %}
               <div class="form-group">
-                <input type="text" name="name" class="form-control" placeholder="Name">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Name">
               </div>
               <div class="form-group">
-                <input type="text" name="email" class="form-control" placeholder="E-Mail">
+                <input type="email" name="email" id="emmail" class="form-control" placeholder="E-Mail">
               </div>
               <div class="form-group">
-                <input type="text" name="phone" class="form-control" placeholder="Phone">
+                <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone">
               </div>
               <div class="form-group">
-                <textarea name="message" rows="5" class="form-control" placeholder="Message"></textarea>
+                <textarea name="message" id="message" rows="5" class="form-control" placeholder="Message"></textarea>
               </div>
               <div class="form-group">
-                <button class="btn btn-success">Send Message</button>
+                <button type="submit" class="btn btn-success">Send Message</button>
               </div>
             </form>
           </div>

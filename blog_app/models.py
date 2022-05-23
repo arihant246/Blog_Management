@@ -1,4 +1,5 @@
 from distutils.command.upload import upload
+import email
 from time import time
 from django.db import models
 from tinymce import models as tinymce_models
@@ -24,14 +25,27 @@ class CommentModels(models.Model):
 
     def __str__(self) -> str:
         return self.comment_body
+
+class SubCommentModels(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
+    comment_body = models.TextField()
+    added_at = models.DateTimeField(auto_now_add=True)
+    comment = models.ForeignKey(comment_body, on_delete=models.CASCADE)
+
+
+class ContactFormModel(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    email = models.CharField(max_length=50, null=True)
+    phone = models.CharField(max_length=50, null=True)
+    message = models.TextField(max_length=200, null=True)
+    timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.name
     
 
-# class SubCommentModels(models.Model):
-#     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-#     post = models.ForeignKey(PostModel, on_delete=models.CASCADE)
-#     comment_body = models.TextField()
-#     added_at = models.DateTimeField(auto_now_add=True)
-#     comment = models.ForeignKey(comment_body, on_delete=models.CASCADE)
+
 
     
         
